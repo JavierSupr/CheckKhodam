@@ -1,0 +1,39 @@
+name: Deploy to Firebase
+
+# Workflow akan dijalankan setiap kali ada push ke branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Langkah pertama, checkout kode dari repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Buat file serviceAccountKey.json dari GitHub Secret
+      - name: Set up Firebase service account
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT_KEY" > serviceAccountKey.json
+
+      # Install dependensi Node.js
+      - name: Install dependencies
+        run: npm install
+
+      # Deploy ke Firebase (sesuaikan perintah dengan kebutuhan Anda)
+      - name: Deploy to Firebase
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/serviceAccountKey.json
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --only hosting
+
+      # Opsional: Hapus file serviceAccountKey.json setelah deploy selesai
+      - name: Clean up
+        run: rm serviceAccountKey.json
