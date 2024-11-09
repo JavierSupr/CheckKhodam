@@ -14,6 +14,11 @@ const app = express();
 // Middleware untuk parsing JSON
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Chekodam Backend API');
+});
+
+
 // Endpoint untuk mengambil data dari koleksi 'USR-001' dengan URL baru
 app.get('/users/getinformation', async (req, res) => {
   try {
