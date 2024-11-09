@@ -1,15 +1,15 @@
 const express = require('express');
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');
 
-// Inisialisasi Firebase Admin SDK
+// Inisialisasi Firebase Admin SDK menggunakan variabel lingkungan
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
 const app = express();
-const port = 3000;
 
 // Middleware untuk parsing JSON
 app.use(express.json());
@@ -31,19 +31,16 @@ app.post('/users/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Validasi untuk memastikan 'name', 'email', dan 'password' ada dalam permintaan
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'Name, email, and password are required' });
     }
 
-    // Menambahkan dokumen baru ke Firestore dengan ID yang dihasilkan secara otomatis
     const newUserRef = await db.collection('USR-001').add({
       name: name,
       email: email,
       password: password
     });
 
-    // Mengirimkan respons yang berisi ID dokumen yang baru dibuat
     res.status(201).json({ id: newUserRef.id, name: name, email: email });
   } catch (error) {
     console.error('Error registering user:', error);
@@ -60,7 +57,6 @@ app.get('/khodam/getrandom', async (req, res) => {
       return res.status(404).json({ error: 'No documents found in collection khod-000' });
     }
 
-    // Mengambil dokumen secara acak
     const randomIndex = Math.floor(Math.random() * snapshot.docs.length);
     const randomDoc = snapshot.docs[randomIndex];
     const data = { id: randomDoc.id, ...randomDoc.data() };
@@ -77,23 +73,19 @@ app.post('/users/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validasi untuk memastikan 'email' dan 'password' ada dalam permintaan
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Mencari pengguna dengan email dan password yang cocok di koleksi 'USR-001'
     const snapshot = await db.collection('USR-001')
       .where('email', '==', email)
       .where('password', '==', password)
       .get();
 
     if (snapshot.empty) {
-      // Jika tidak ada dokumen yang cocok
       return res.status(404).json({ message: 'Informasi tidak ditemukan' });
     }
 
-    // Jika ditemukan dokumen yang cocok
     const userDoc = snapshot.docs[0];
     const userData = { id: userDoc.id, ...userDoc.data() };
 
@@ -112,12 +104,10 @@ app.post('/khodam/addImage', async (req, res) => {
   try {
     const { docId, imageUrl } = req.body;
 
-    // Validasi untuk memastikan 'docId' dan 'imageUrl' ada dalam permintaan
     if (!docId || !imageUrl) {
       return res.status(400).json({ error: 'docId and imageUrl are required' });
     }
 
-    // Perbarui atau tambahkan field 'imageUrl' pada dokumen di koleksi 'khod-000'
     await db.collection('khod-000').doc(docId).update({
       imageUrl: imageUrl
     });
@@ -129,8 +119,5 @@ app.post('/khodam/addImage', async (req, res) => {
   }
 });
 
-
-// Jalankan server
-app.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
-});
+// Ekspor `app` untuk digunakan oleh Vercel
+module.exports = app;
