@@ -15,8 +15,18 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the Chekodam Backend API');
+  res.json({
+    message: 'Welcome to the Chekodam Backend API',
+    endpoints: [
+      { method: 'GET', path: '/users/getinformation', description: 'Retrieve all user information from collection USR-001' },
+      { method: 'POST', path: '/users/register', description: 'Register a new user with name, email, and password' },
+      { method: 'POST', path: '/users/login', description: 'Login with email and password' },
+      { method: 'GET', path: '/khodam/getrandom', description: 'Retrieve a random document from collection khod-000' },
+      { method: 'POST', path: '/khodam/addImage', description: 'Add or update image URL for a document in collection khod-000' }
+    ]
+  });
 });
+
 
 
 // Endpoint untuk mengambil data dari koleksi 'USR-001' dengan URL baru
