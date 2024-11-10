@@ -1,6 +1,6 @@
-# CheckHodam
+# CHECKHODAM
 
-**CheckHodam** adalah aplikasi hiburan yang dapat menentukan khodam dari seseorang. Aplikasi ini memberikan hasil acak mengenai khodam seseorang, serta menyediakan fitur untuk mengeksplorasi khodam lebih dalam, melakukan pengecekan khodam, dan membagikan hasilnya.
+**CHECKHODAM** adalah aplikasi hiburan yang dapat menentukan khodam dari seseorang. Aplikasi ini memberikan hasil acak mengenai khodam seseorang, serta menyediakan fitur untuk mengeksplorasi khodam lebih dalam, melakukan pengecekan khodam, dan membagikan hasilnya.
 
 ## Fitur
 
@@ -19,7 +19,7 @@
 1. Clone repositori ini ke komputer Anda:
 
    ```bash
-   git clone https://github.com/username/checkhodam.git
+   git clone https://github.com/JavierSupr/CheckKhodam.git
 
 2. Pindah ke direktori proyek:
 
