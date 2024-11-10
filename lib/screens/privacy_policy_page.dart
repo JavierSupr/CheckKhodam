@@ -1,3 +1,6 @@
+import 'package:checkkhodam/screens/explanation_page.dart';
+import 'package:checkkhodam/screens/landing_page.dart';
+
 import 'welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -262,7 +265,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          const WelcomePage(),
+          const LandingPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0); // Swipe from right to left
         const end = Offset.zero;

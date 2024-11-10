@@ -25,13 +25,19 @@ flutter:
 
   assets:
     - assets/fonts/
+    - assets/images/Ellipse 60.png
     - assets/images/Ellipse 61.png
     - assets/images/Ellipse 62.png
     - assets/images/Ellipse 63.png
+    - assets/images/Ellipse 70.png
+    - assets/images/Ellipse 71.png
     - assets/images/CHECKHODAM.png
     - assets/images/CHECKHODAM_1.png
+    - assets/images/Rectangle 353.png
     - assets/images/Rectangle 354.png
-    - assets/images/Ellipse 60.png
+    - assets/images/Group 5.png
+    - assets/images/Group 6.png
+    - assets/images/Group 7.png
 
   fonts:
     - family: DEATH_FONT

@@ -1,5 +1,5 @@
+import 'package:checkkhodam/screens/explanation_page.dart';
 import 'package:flutter/material.dart';
-import 'explanation_page.dart'; // Mengimpor halaman kebijakan privasi
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -96,7 +96,8 @@ class WelcomePage extends StatelessWidget {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => LandingPage(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          ExplanationPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0); // Swipe from right to left
         const end = Offset.zero;

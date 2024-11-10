@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'privacy_policy_page.dart'; // Import your next page
 
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+class ExplanationPage extends StatelessWidget {
+  const ExplanationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
