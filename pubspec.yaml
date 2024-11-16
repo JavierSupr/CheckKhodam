@@ -38,7 +38,9 @@ flutter:
     - assets/images/Group 45.png
     - assets/images/Group 43.png
     - assets/images/Group 47.png
-
+    - assets/images/Ellipse 65.png
+    - assets/images/Ellipse 67.png
+    - assets/images/Ellipse 69.png
   fonts:
     - family: DEATH_FONT
       fonts:
