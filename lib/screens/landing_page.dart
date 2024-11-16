@@ -1,3 +1,4 @@
+import 'package:checkkhodam/screens/camera_page.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
@@ -8,6 +9,14 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  // Function to navigate to SecondPage
+  void _navigateToCameraPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CameraPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,52 +67,56 @@ class _LandingPageState extends State<LandingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: 160, // Adjust the overall size of the Stack
-                        height: 120,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: RadialGradient(
-                                  colors: [
-                                    Colors.white, // Inner color
-                                    Colors.blue, // Outer color
-                                  ],
-                                  center: Alignment(-0.5, -0.3),
-                                  radius:
-                                      0.2, // Adjust the spread of the gradient
+                  GestureDetector(
+                    onTap: _navigateToCameraPage,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 160, // Adjust the overall size of the Stack
+                          height: 120,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: 100,
+                                height: 100,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      Colors.white, // Inner color
+                                      Colors.blue, // Outer color
+                                    ],
+                                    center: Alignment(-0.5, -0.3),
+                                    radius:
+                                        0.2, // Adjust the spread of the gradient
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 15, // Adjust the vertical position
-                              child: Image.asset(
-                                'assets/images/Group 43.png', // Replace with your image path
-                                width: 160, // Adjust image size
-                                height: 107,
-                                fit: BoxFit.cover,
+                              Positioned(
+                                top: 15, // Adjust the vertical position
+                                child: Image.asset(
+                                  'assets/images/Group 43.png', // Replace with your image path
+                                  width: 160, // Adjust image size
+                                  height: 107,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                          height: 8), // Space between the button and text
-                      const Text(
-                        'CHECKHODAM',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: "DEATH_FONT",
-                            color: Colors.white), // White text for contrast
-                      ),
-                    ],
+
+                        const SizedBox(
+                            height: 8), // Space between the button and text
+                        const Text(
+                          'CHECKHODAM',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontFamily: "DEATH_FONT",
+                              color: Colors.white), // White text for contrast
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 20), // Space between buttons
                   Column(
