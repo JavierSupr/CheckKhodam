@@ -1,4 +1,5 @@
 import 'package:checkkhodam/screens/camera_page.dart';
+import 'package:checkkhodam/screens/quiz_page_0.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
@@ -14,8 +15,20 @@ class _LandingPageState extends State<LandingPage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CameraPage()),
+
     );
   }
+
+    
+  void _navigateToQuizPage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const QuizPage0()),
+    );
+  }
+
+  
+  
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +131,11 @@ class _LandingPageState extends State<LandingPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20), // Space between buttons
-                  Column(
+                  
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: _navigateToQuizPage, // Space between buttons
+                  child : Column(
                     children: [
                       SizedBox(
                         width: 160,
@@ -166,6 +182,7 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                     ],
                   ),
+                ),
                   const SizedBox(height: 20),
                   Column(
                     children: [

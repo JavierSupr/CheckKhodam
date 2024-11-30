@@ -45,7 +45,7 @@ class WelcomePage extends StatelessWidget {
                 padding: EdgeInsets.only(
                     left: 20.0, top: 150.0), // Padding from the left and top
                 child: Text(
-                  'A VISUALIZATION OF YOUR     KHODAM JOURNEY',
+                  'A VISUALIZATION\nOF YOUR\nKHODAM JOURNEY',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40,
