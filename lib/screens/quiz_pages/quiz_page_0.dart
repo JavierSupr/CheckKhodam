@@ -1,4 +1,4 @@
-import 'package:checkkhodam/screens/welcome_page.dart';
+import 'package:checkkhodam/screens/quiz_pages/Question_1.dart';
 import 'package:flutter/material.dart';
 
 class QuizPage0 extends StatelessWidget {
@@ -52,7 +52,7 @@ class QuizPage0 extends StatelessWidget {
               const SizedBox(height: 10),
               // Text centered
               const Padding(
-                padding: const EdgeInsets.only(left: 18.0),
+                padding: EdgeInsets.only(left: 18.0),
                 child: Center(
                   child: Text(
                     'Jawablah beberapa pertanyaan berikut ini dan dapatkan khodam yang sesuai dengan kepribadian mu!',
@@ -116,7 +116,7 @@ class QuizPage0 extends StatelessWidget {
  Route routeChangePage() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          WelcomePage(),
+          Question1(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0); // Swipe from right to left
         const end = Offset.zero;
