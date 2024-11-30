@@ -9,6 +9,12 @@ class QuizPage0 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
       ),
       body: Stack(
         children: [
@@ -18,7 +24,7 @@ class QuizPage0 extends StatelessWidget {
           ),
           // Positioned image at the bottom-left
           Positioned(
-            bottom: 0,
+            top: 0,
             left: 0,
             child: Image.asset(
               'assets/images/bg_asset_quiz0.png',
@@ -29,13 +35,16 @@ class QuizPage0 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Padding(
-                padding: EdgeInsets.only(left: 63.0, top: 203.0), // Padding from the left and top
-                child: Text(
-                  'KHODAM \n QUIZ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 96,
-                    fontFamily: 'DEATH_FONT',
+                padding: EdgeInsets.only(top:150.0), // Padding from the left and top
+                child: Center(
+                  child: Text(
+                    'KHODAM\nQUIZ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 96,
+                      fontFamily: 'DEATH_FONT',
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -78,11 +87,15 @@ class QuizPage0 extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
+                        border: Border.all(
+                          color: Colors.white, // White color for the outline
+                          width: 2, // Width of the outline
+                        ),
                     ),
                   child: 
                     const Center(
                       child : Text(
-                      'Start Quiz', // Text on the button
+                      'START QUIZ', // Text on the button
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
