@@ -1,4 +1,5 @@
 import 'package:checkkhodam/screens/camera_page.dart';
+import 'khodam_xplore.dart';
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
@@ -9,11 +10,19 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  // Function to navigate to SecondPage
+  // Function to navigate to CameraPage
   void _navigateToCameraPage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CameraPage()),
+    );
+  }
+
+  // Function to navigate to KhodamXplorePage
+  void _navigateToKhodamXplorePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const KhodamXplorePage()),
     );
   }
 
@@ -167,52 +176,55 @@ class _LandingPageState extends State<LandingPage> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: 160,
-                        height: 120,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: RadialGradient(
-                                  colors: [
-                                    Colors.white, // Inner color
-                                    Color.fromARGB(
-                                        197, 255, 0, 0), // Outer color
-                                  ],
-                                  center: Alignment(-0.1, -0.1),
-                                  radius:
-                                      0.4, // Adjust the spread of the gradient
+                  GestureDetector(
+                    onTap: _navigateToKhodamXplorePage,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 160,
+                          height: 120,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: 100,
+                                height: 100,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: RadialGradient(
+                                    colors: [
+                                      Colors.white, // Inner color
+                                      Color.fromARGB(
+                                          197, 255, 0, 0), // Outer color
+                                    ],
+                                    center: Alignment(-0.1, -0.1),
+                                    radius:
+                                        0.4, // Adjust the spread of the gradient
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 15, // Adjust the vertical position
-                              child: Image.asset(
-                                'assets/images/Group 47.png',
-                                width: 160,
-                                height: 107,
-                                fit: BoxFit.cover,
+                              Positioned(
+                                top: 15, // Adjust the vertical position
+                                child: Image.asset(
+                                  'assets/images/Group 47.png',
+                                  width: 160,
+                                  height: 107,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'KHODAM XPLORE',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: "DEATH_FONT",
-                            color: Colors.white),
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        const Text(
+                          'KHODAM XPLORE',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontFamily: "DEATH_FONT",
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
