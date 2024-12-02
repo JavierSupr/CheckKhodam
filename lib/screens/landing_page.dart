@@ -1,5 +1,9 @@
 import 'package:checkkhodam/screens/camera_page.dart';
+<<<<<<< HEAD
 import 'khodam_xplore.dart';
+=======
+import 'package:checkkhodam/screens/quiz_page_0.dart';
+>>>>>>> 00950609c9873dd2f2d87e504ceecb4cfd2e2813
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
@@ -15,9 +19,11 @@ class _LandingPageState extends State<LandingPage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CameraPage()),
+
     );
   }
 
+<<<<<<< HEAD
   // Function to navigate to KhodamXplorePage
   void _navigateToKhodamXplorePage() {
     Navigator.push(
@@ -26,6 +32,19 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+=======
+    
+  void _navigateToQuizPage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const QuizPage0()),
+    );
+  }
+
+  
+  
+
+>>>>>>> 00950609c9873dd2f2d87e504ceecb4cfd2e2813
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,8 +146,11 @@ class _LandingPageState extends State<LandingPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20), // Space between buttons
-                  Column(
+                  
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: _navigateToQuizPage, // Space between buttons
+                  child : Column(
                     children: [
                       SizedBox(
                         width: 160,
@@ -175,6 +197,7 @@ class _LandingPageState extends State<LandingPage> {
                       ),
                     ],
                   ),
+                ),
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: _navigateToKhodamXplorePage,

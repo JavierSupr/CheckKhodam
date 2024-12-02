@@ -29,6 +29,9 @@ flutter:
 
   assets:
     - assets/fonts/
+    - assets/images/bg_quiz_odd.png
+    - assets/images/bg_quiz_even.png
+    - assets/images/bg_asset_quiz0.png
     - assets/images/Ellipse 60.png
     - assets/images/Ellipse 61.png
     - assets/images/Ellipse 62.png
