@@ -1,7 +1,14 @@
 import 'package:checkkhodam/screens/camera_page.dart';
+import 'package:checkkhodam/screens/privacy_policy_page.dart';
+import 'package:checkkhodam/screens/welcome_page.dart';
 import 'khodam_xplore.dart';
 import 'quiz_pages/quiz_page_0.dart';
+import 'package:checkkhodam/screens/quiz_pages/quiz_page_0.dart';
+
 import 'package:flutter/material.dart';
+import 'privacy_policy_page.dart';
+import 'camera_page.dart';
+import 'welcome_page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -19,6 +26,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+
   // Function to navigate to KhodamXplorePage
   void _navigateToKhodamXplorePage() {
     Navigator.push(
@@ -28,19 +36,37 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   void _navigateToQuizPage() {
+
+    
+  void _navigateToQuizPage(){
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const QuizPage0()),
     );
   }
 
+  
+  
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(Icons.menu, color: Colors.white,),
+              onPressed: () {
+                Scaffold.of(context).openDrawer(); // Correct context
+              },
+            );
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          
           children: [
             Image.asset(
               'assets/images/CHECKHODAM_1.png', // Logo in AppBar
@@ -49,6 +75,57 @@ class _LandingPageState extends State<LandingPage> {
           ],
         ),
         centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.black
+          ),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.transparent, // Transparan agar gambar terlihat
+                ),
+                child: Text(
+                  'CheckKhodam',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'DEATH_FONT',
+                    fontSize: 45,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.article, color: Colors.white),
+                title: const Text(
+                  'Terms and Conditions',
+                  style: TextStyle(color: Colors.white, fontFamily: 'kannada-sangam-mn'),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.info, color: Colors.white),
+                title: const Text(
+                  'About Us',
+                  style: TextStyle(color: Colors.white, fontFamily: 'micross'),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WelcomePage()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Container(
         color: Colors.black, // Set the background color to black

@@ -75,8 +75,8 @@ class _QuestionPageState extends State<QuestionPage> {
             left: 0,
             child: Image.asset(
               widget.currentIndex % 2 == 0
-                  ? 'assets/images/bg_quiz_even.png'
-                  : 'assets/images/bg_quiz_odd.png',
+                  ? 'assets/images/bg_quiz_odd.png'
+                  : 'assets/images/bg_quiz_even.png',
             ),
           ),
           Padding(
