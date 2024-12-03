@@ -32,6 +32,7 @@ flutter:
     - assets/fonts/
     - assets/images/appBar.png
     - assets/images/khal.png
+    - assets/images/bg_tnc_page.png
     - assets/images/rifan.png
     - assets/images/beryl.JPG
     - assets/images/logoPakArta.png
