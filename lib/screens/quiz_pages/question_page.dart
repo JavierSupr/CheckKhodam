@@ -53,12 +53,12 @@ class _QuestionPageState extends State<QuestionPage> {
             color: Colors.black,
           ),
           Positioned(
-            top: 0,
+            bottom: 0,
             left: 0,
             child: Image.asset(
               widget.currentIndex % 2 == 0
-                  ? 'assets/images/bg_quiz_even.png'
-                  : 'assets/images/bg_quiz_odd.png',
+                  ? 'assets/images/bg_quiz_odd.png'
+                  : 'assets/images/bg_quiz_even.png',
             ),
           ),
           Padding(
