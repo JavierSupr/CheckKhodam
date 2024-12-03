@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:checkkhodam/screens/landing_page.dart';
 import 'package:checkkhodam/screens/welcome_page.dart';
+import 'package:checkkhodam/screens/khodam_detail.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class QuestionPage extends StatefulWidget {
   final String question;
@@ -22,6 +25,21 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   String? _selectedOption;
+
+  Future<Map<String, String>> fetchKhodamDetails() async {
+    final response = await http
+        .get(Uri.parse('https://chekodam-backend.vercel.app/khodam/getrandom'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return {
+        'title': data['nama'],
+        'description': data['deskripsi'],
+      };
+    } else {
+      throw Exception('Failed to load khodam details');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +71,7 @@ class _QuestionPageState extends State<QuestionPage> {
             color: Colors.black,
           ),
           Positioned(
-            top: 0,
+            bottom: 0,
             left: 0,
             child: Image.asset(
               widget.currentIndex % 2 == 0
@@ -131,7 +149,7 @@ class _QuestionPageState extends State<QuestionPage> {
               width: 140,
               height: 41,
               child: OutlinedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_selectedOption == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -143,24 +161,34 @@ class _QuestionPageState extends State<QuestionPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => QuestionPage(
-                          question: questionData[widget.currentIndex + 1]['question'],
-                          options: questionData[widget.currentIndex + 1]['options'],
+                          question: questionData[widget.currentIndex + 1]
+                              ['question'],
+                          options: questionData[widget.currentIndex + 1]
+                              ['options'],
                           currentIndex: widget.currentIndex + 1,
                           totalQuestions: widget.totalQuestions,
                         ),
                       ),
                     );
                   } else {
+                    // Fetch khodam details and navigate to KhodamDetailPage
+                    final khodamDetails = await fetchKhodamDetails();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WelcomePage()),
+                      MaterialPageRoute(
+                        builder: (context) => KhodamDetailPage(
+                          title: khodamDetails['title']!,
+                          description: khodamDetails['description']!,
+                        ),
+                      ),
                     );
                   }
                 },
                 style: OutlinedButton.styleFrom(
-                  backgroundColor: widget.currentIndex < widget.totalQuestions - 1
-                      ? Colors.transparent
-                      : Colors.red,
+                  backgroundColor:
+                      widget.currentIndex < widget.totalQuestions - 1
+                          ? Colors.transparent
+                          : Colors.red,
                   side: BorderSide(
                     color: widget.currentIndex < widget.totalQuestions - 1
                         ? Colors.white
@@ -172,7 +200,9 @@ class _QuestionPageState extends State<QuestionPage> {
                   ),
                 ),
                 child: Text(
-                  widget.currentIndex < widget.totalQuestions - 1 ? "NEXT" : "FINISH",
+                  widget.currentIndex < widget.totalQuestions - 1
+                      ? "NEXT"
+                      : "FINISH",
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -188,107 +218,114 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 }
 
-
 // Data pertanyaan (letakkan di file terpisah jika perlu)
 const List<Map<String, dynamic>> questionData = [
-  {//question 1
-    "question": "Jika semangka bisa berbicara, apa yang akan dia katakan saat dimakan?",
-    "options": 
-    [
+  {
+    //question 1
+    "question":
+        "Jika semangka bisa berbicara, apa yang akan dia katakan saat dimakan?",
+    "options": [
       "Jangan kunyah bijiku!",
       "Akhirnya, aku pensiun dari dunia pertanian",
       "Tolong, aku punya keluarga di kulkas!",
       "Aku harap gigimu bersih"
-     ]
+    ]
   },
-  {//question 2
-    "question": "Kamu sedang berjalan di hutan yang sangat gelap, tiba-tiba ada suara besar yang datang dari belakang. Kamu berbalik dan melihat apa?",
-    "options": 
-    [
+  {
+    //question 2
+    "question":
+        "Kamu sedang berjalan di hutan yang sangat gelap, tiba-tiba ada suara besar yang datang dari belakang. Kamu berbalik dan melihat apa?",
+    "options": [
       "Kucing Akmal",
       "Sepasang sepatu yang bisa nge-rizz",
       "Sebuah mobil yang minta tolong untuk parkir",
       "Sebuah pohon yang sedang mewing"
-     ]
+    ]
   },
-  {//question 3
-    "question": "Saat kamu berjalan di pasar malam, tiba-tiba ada tikus yang menawarkan kamu sesuatu. Apa yang dia tawarkan?",
-    "options": 
-    [
+  {
+    //question 3
+    "question":
+        "Saat kamu berjalan di pasar malam, tiba-tiba ada tikus yang menawarkan kamu sesuatu. Apa yang dia tawarkan?",
+    "options": [
       "mau tau trik jitu cara menjadi sigma dalam satu malam?",
       "Jangan khawatir, aku akan memberi rizz seumur hidupmu.",
       "Ini bukan tikus biasa, dia seorang master mewing!",
       "Sebuah tutorial mewing yang akan mengubah hidupmu"
-     ]
+    ]
   },
-  {//question 4
-    "question": "Kamu terjebak di dalam kulkas dengan seekor ayam. Apa yang pertama kali kamu lakukan?",
-    "options": 
-    [
+  {
+    //question 4
+    "question":
+        "Kamu terjebak di dalam kulkas dengan seekor ayam. Apa yang pertama kali kamu lakukan?",
+    "options": [
       "Ajak ayam ngomongin resep gulai ayam",
       "Minta ayam ngajarin cara bertelur",
       "Main petak umpet sama ayam, tapi nanti yang ketemu bisa jadi makan malam",
       "Tanya ayam cara menghilangkan bau ketek (sarkas)"
-     ]
+    ]
   },
-  {//question 5
-    "question": "Kamu sedang naik angkot, tiba-tiba supirnya berhenti dan bilang, 'Saya berhenti, karena angkot ini punya perasaan!' Apa yang kamu lakukan?",
-    "options": 
-    [
+  {
+    //question 5
+    "question":
+        "Kamu sedang naik angkot, tiba-tiba supirnya berhenti dan bilang, 'Saya berhenti, karena angkot ini punya perasaan!' Apa yang kamu lakukan?",
+    "options": [
       "Bilang, 'Gak papa, angkot. Kita kan semua punya perasaan.'",
       "Coba minta maaf sama angkotnya, siapa tau bisa jalan lagi",
       "Tanya, 'Emang angkotnya lagi galau, atau cuma pengen silent treatment aja?",
       "Bilang, 'Yaudah, angkot. Nanti kita buat sesi konseling"
-     ]
+    ]
   },
-  {//question 6
-    "question": "Kamu lagi di dalam kereta, tiba-tiba kereta mulai ngomong, 'Saya butuh istirahat, kalian semua turun dulu' Apa yang kamu lakukan?",
-    "options": 
-    [
+  {
+    //question 6
+    "question":
+        "Kamu lagi di dalam kereta, tiba-tiba kereta mulai ngomong, 'Saya butuh istirahat, kalian semua turun dulu' Apa yang kamu lakukan?",
+    "options": [
       "Bilang, 'Eh kereta, kita kan baru mulai, jangan ngambek dulu!'",
       "Tanya, 'Kereta, kamu capek ya? Gimana kalau kita kasih kamu libur sebulan?'",
       "Coba tawarin kereta untuk liburan ke Bali, biar nggak stres.",
       "Bilang, 'Kereta, kayaknya kita mending break dulu. Kamu terlalu toxic!'"
-     ]
+    ]
   },
-  {//question 7
-    "question": "Kamu lagi di taman, tiba-tiba ada orang yang kamu suka datang sambil bawa bunga mawar. Tapi dia ngomong, 'Aku cinta sama kamu, tapi aku juga cinta sama kucing peliharaanmu.' Apa yang kamu lakukan?",
-    "options": 
-    [
+  {
+    //question 7
+    "question":
+        "Kamu lagi di taman, tiba-tiba ada orang yang kamu suka datang sambil bawa bunga mawar. Tapi dia ngomong, 'Aku cinta sama kamu, tapi aku juga cinta sama kucing peliharaanmu.' Apa yang kamu lakukan?",
+    "options": [
       "Bilang, 'Aku cinta kamu juga, tapi kucingku lebih cantik.'",
       "Tanya, 'Jadi, kamu mau cinta aku apa kucing, ya?'",
       "Coba ajak, 'Gimana kalau kita semua pacaran bareng?'",
       "Bilang, 'Bunga mawar sih oke, tapi kucingnya jangan diajak pacaran.'"
-     ]
+    ]
   },
-  {//question 8
+  {
+    //question 8
     "question": "Kalau manusia punya ekor, untuk apa kita memakainya?",
-    "options": 
-    [
+    "options": [
       "Untuk menyeimbangkan isi dompet",
       "Ikat pinggang",
       "Untuk nge-swipe di aplikasi dating",
       "Apa kek"
-     ]
+    ]
   },
-  {//question 9
+  {
+    //question 9
     "question": "Kenapa sandal sering hilang sebelah?",
-    "options": 
-    [
+    "options": [
       "Karena mereka punya hubungan toxic",
       "Karena sebelahnya sudah lelah diinjak terus",
       "Karena mereka rebutan siapa yang lebih nyaman",
       "Ya gapapa sih, nanya mulu"
-     ]
+    ]
   },
-  {//question 10
-    "question": "Kamu bepergian bersama pasangan baru mu ke mall di kota mu, di tengah jalan ada bapak-bapak berpakaian naruto melihat ke arah kalian. Apa yang kamu lakukan?",
-    "options": 
-    [
+  {
+    //question 10
+    "question":
+        "Kamu bepergian bersama pasangan baru mu ke mall di kota mu, di tengah jalan ada bapak-bapak berpakaian naruto melihat ke arah kalian. Apa yang kamu lakukan?",
+    "options": [
       "Cium pipi kanan cium pipi kiri",
       "Peluk dari belakang, sambil tanya 'hari ini khodam apa sayang?'",
       "ganti pasangan",
       "Jadi presiden"
-     ]
+    ]
   }
 ];

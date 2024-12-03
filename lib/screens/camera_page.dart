@@ -173,17 +173,13 @@ class _CameraPageState extends State<CameraPage> {
               left: 0,
               right: 0,
               child: Center(
-                child: ElevatedButton(
-                  onPressed: _takePicture,
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(20),
-                    backgroundColor: Colors.white.withOpacity(0.7),
-                  ),
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: 30,
-                    color: Colors.black,
+                child: GestureDetector(
+                  onTap:
+                      _takePicture, // Trigger the picture taking function when the image is tapped
+                  child: Image.asset(
+                    'assets/images/Final State.png', // Replace with your image path
+                    width: 100, // Adjust size as needed
+                    height: 100, // Adjust size as needed
                   ),
                 ),
               ),
@@ -202,15 +198,20 @@ class ImagePreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('Image Preview'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/CHECKHODAM_1.png', // Logo in AppBar
+              height: 20,
+            ),
+          ],
         ),
+        centerTitle: true,
       ),
       body: Container(
         color: Colors.black,
@@ -243,15 +244,19 @@ class ImagePreviewScreen extends StatelessWidget {
             ),
 
             // Centered Image Preview
-            Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.7,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 2),
-                  image: DecorationImage(
-                    image: FileImage(File(imagePath)),
-                    fit: BoxFit.contain,
+            Positioned(
+              top: 0, // Positioned at the top of the screen
+              left: 0,
+              right: 0,
+              height: screenSize.height * 0.75, // Takes up 75% of screen height
+              child: Transform.scale(
+                scale: 0.9, // Slightly zoomed out
+                child: AspectRatio(
+                  aspectRatio:
+                      16 / 9, // Adjust to match the aspect ratio of your image
+                  child: Image.file(
+                    File(imagePath),
+                    fit: BoxFit.cover, // Make sure the image fits well
                   ),
                 ),
               ),
@@ -265,38 +270,95 @@ class ImagePreviewScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Retake photo
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.7),
-                    ),
-                    child: const Text(
-                      'Retake',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Navigate to ImageProcessingScreen with the captured image path
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ImageProcessingScreen(
-                            originalImagePath: imagePath,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Row for buttons (horizontal arrangement)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // First ElevatedButton with text below
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Retake photo
+                                  Navigator.of(context).pop();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape:
+                                      CircleBorder(), // Makes the button circular
+                                  padding: EdgeInsets.all(20),
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.7),
+                                ),
+                                child: Image.asset(
+                                  'assets/images/Rotate Camera.png', // Replace with your image path
+                                  width: 30, // Adjust size as needed
+                                  height: 30, // Adjust size as needed
+                                ),
+                              ),
+                              SizedBox(
+                                  height:
+                                      8), // Space between the button and text
+                              Text(
+                                'RETAKE',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'DEATH_FONT'),
+                              ),
+                            ],
                           ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.7),
-                    ),
-                    child: const Text(
-                      'Process',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
+
+                          SizedBox(width: 120), // Space between the two buttons
+
+                          // Second ElevatedButton with text below
+                          Column(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Navigate to ImageProcessingScreen with the captured image path
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ImageProcessingScreen(
+                                        originalImagePath: imagePath,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape:
+                                      CircleBorder(), // Makes the button circular
+                                  padding: EdgeInsets.all(20),
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.7),
+                                ),
+                                child: Image.asset(
+                                  'assets/images/ic_process.png', // Replace with your image path
+                                  width: 30, // Adjust size as needed
+                                  height: 30, // Adjust size as needed
+                                ),
+                              ),
+                              SizedBox(
+                                  height:
+                                      8), // Space between the button and text
+                              Text(
+                                'PROCESS',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'DEATH_FONT'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

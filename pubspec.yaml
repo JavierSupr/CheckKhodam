@@ -17,6 +17,7 @@ dependencies:
   http: ^1.2.2
   image: ^3.3.0
   share_plus: ^10.1.2
+  screenshot: ^3.0.0
   
 
 dev_dependencies:
@@ -48,9 +49,21 @@ flutter:
     - assets/images/Ellipse 65.png
     - assets/images/Ellipse 67.png
     - assets/images/Ellipse 69.png
+    - assets/images/Final State.png
+    - assets/images/Search More.png
+    - assets/images/Icon.png
+    - assets/images/Rotate Camera.png
+    - assets/images/ic_process.png
+    - assets/images/Rectangle 360.png
+    - assets/images/Save.png
+
   fonts:
     - family: DEATH_FONT
       fonts:
         - asset: assets/fonts/DEATH_FONT.TTF
         - asset: assets/fonts/kannada-sangam-mn.ttf
-        - asset: assets/fonts/micross.ttf   
+        - asset: assets/fonts/micross.ttf 
+        - asset: assets/fonts/boxpot1.ttf  
+    - family: boxpot
+      fonts:
+        - asset: assets/fonts/boxpot1.ttf
