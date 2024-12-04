@@ -75,7 +75,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '  Pengguna bertanggung jawab untuk setiap aktivitas yang dilakukan melalui akun mereka.',
+                      '  Aplikasi ini dirancang untuk tujuan hiburan dan edukasi ringan. Segala informasi yang disediakan hanya untuk keperluan bersenang-senang, dan tidak boleh dianggap sebagai nasihat profesional.',
                       textAlign: TextAlign.justify, // Make text justified
                       style: TextStyle(
                         color: Colors.white,
@@ -93,7 +93,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '  Pengguna bertanggung jawab untuk setiap aktivitas yang dilakukan melalui akun mereka.',
+                      '  Pengguna bertanggung jawab atas segala aktivitas yang dilakukan di aplikasi ini. Hindari penggunaan yang dapat merugikan pihak lain atau melanggar hukum.',
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         color: Colors.white,
@@ -111,7 +111,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '  Kami menghargai privasi pengguna dan berkomitmen untuk melindungi data pribadi Anda.',
+                      '  Kami menghargai privasi Anda dan berkomitmen untuk melindungi data pribadi Anda. Informasi yang dikumpulkan hanya digunakan untuk meningkatkan pengalaman Anda di aplikasi ini.',
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         color: Colors.white,
@@ -120,7 +120,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '4. Pembaruan Aplikasi:',
+                      '4. Keterbatasan Tanggung Jawab:',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -129,7 +129,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '  Aplikasi ini dapat di-update sewaktu-waktu untuk meningkatkan fungsionalitasnya.',
+                      '  Aplikasi ini tidak memberikan jaminan atas keakuratan atau hasil apa pun. Kami tidak bertanggung jawab atas kerugian yang mungkin timbul dari penggunaan aplikasi ini.',
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         color: Colors.white,
@@ -138,7 +138,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '5. Batasan Tanggung Jawab:',
+                      '5. Hanya untuk Have Fun:',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -147,7 +147,7 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '  Kami tidak bertanggung jawab atas kerugian yang timbul akibat penyalahgunaan aplikasi.',
+                      '  Aplikasi ini dibuat hanya untuk bersenang-senang. Jadi, jangan terlalu serius! Nikmati fitur yang ada, tertawa, dan eksplorasi dunia CheckKhodam dengan santai.',
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         color: Colors.white,
@@ -156,7 +156,25 @@ class _TnCPageState extends State<TnCPage> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '6. Hukum yang Berlaku:',
+                      '6. Pembaruan Aplikasi:',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      '  Kami berhak untuk memperbarui aplikasi ini sewaktu-waktu, termasuk syarat dan ketentuan ini, tanpa pemberitahuan terlebih dahulu.',
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      '7. Hukum yang Berlaku:',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
