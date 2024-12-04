@@ -2,13 +2,9 @@ import 'package:checkkhodam/screens/camera_page.dart';
 import 'package:checkkhodam/screens/privacy_policy_page.dart';
 import 'package:checkkhodam/screens/welcome_page.dart';
 import 'khodam_xplore.dart';
-import 'quiz_pages/quiz_page_0.dart';
 import 'package:checkkhodam/screens/quiz_pages/quiz_page_0.dart';
 
 import 'package:flutter/material.dart';
-import 'privacy_policy_page.dart';
-import 'camera_page.dart';
-import 'welcome_page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -26,7 +22,6 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-
   // Function to navigate to KhodamXplorePage
   void _navigateToKhodamXplorePage() {
     Navigator.push(
@@ -36,18 +31,11 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   void _navigateToQuizPage() {
-
-    
-  void _navigateToQuizPage(){
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const QuizPage0()),
     );
   }
-
-  
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +45,10 @@ class _LandingPageState extends State<LandingPage> {
         leading: Builder(
           builder: (context) {
             return IconButton(
-              icon: Icon(Icons.menu, color: Colors.white,),
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
               onPressed: () {
                 Scaffold.of(context).openDrawer(); // Correct context
               },
@@ -66,7 +57,6 @@ class _LandingPageState extends State<LandingPage> {
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          
           children: [
             Image.asset(
               'assets/images/CHECKHODAM_1.png', // Logo in AppBar
@@ -78,9 +68,7 @@ class _LandingPageState extends State<LandingPage> {
       ),
       drawer: Drawer(
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black
-          ),
+          decoration: BoxDecoration(color: Colors.black),
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
@@ -101,12 +89,14 @@ class _LandingPageState extends State<LandingPage> {
                 leading: Icon(Icons.article, color: Colors.white),
                 title: const Text(
                   'Terms and Conditions',
-                  style: TextStyle(color: Colors.white, fontFamily: 'kannada-sangam-mn'),
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: 'kannada-sangam-mn'),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                    MaterialPageRoute(
+                        builder: (context) => PrivacyPolicyPage()),
                   );
                 },
               ),

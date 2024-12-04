@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart'; // Import share_plus
@@ -7,6 +9,7 @@ import 'package:path_provider/path_provider.dart'; // Import path_provider
 import 'package:flutter/services.dart'; // For saving file to device
 import 'package:http/http.dart' as http; // Import http package
 import 'dart:convert'; // For converting JSON response
+import 'khodam_result.dart';
 
 class KhodamDetailPage extends StatefulWidget {
   final String title;
@@ -24,6 +27,20 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
   Uint8List? capturedImage;
   String title = '';
   String description = '';
+  String imageUrl = '';
+  double extrovert = 0.0;
+  double introvert = 0.0;
+  String jomok_level = '';
+  String love_language = '';
+  String people = '';
+
+  bool isDataLoaded = false; // Track whether data has been loaded
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // Fetch data when the page is initialized
+  }
 
   // Fetch data from API
   Future<void> fetchData() async {
@@ -36,6 +53,24 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
         setState(() {
           title = data['nama'];
           description = data['deskripsi'];
+          imageUrl = data['imageUrl'];
+          extrovert = data['extrovert'].toDouble();
+          introvert = data['introvert'].toDouble();
+          jomok_level = data['jomok meter'];
+          love_language = data['love language'];
+          people = data['orang terkenal dengan khodam ini'];
+        });
+
+        // Download the image after fetching data
+        print(" title $title");
+        print("desc $description");
+        print("url $imageUrl");
+        downloadImage(imageUrl);
+        print("New image URL: $imageUrl");
+
+        // Once the image is downloaded, set isDataLoaded to true
+        setState(() {
+          isDataLoaded = true; // Mark data as loaded
         });
       } else {
         throw Exception('Failed to load data');
@@ -45,10 +80,51 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData(); // Fetch data when the page is initialized
+  Future<void> downloadImage(String url) async {
+    try {
+      // Get the application's document directory
+      final directory = await getApplicationDocumentsDirectory();
+
+      // Find the next available index for the image file
+      int index = 1;
+      String filePath = '${directory.path}/khodam_image_$index.png';
+
+      // Check if the file already exists and increment index until a free spot is found
+      while (await File(filePath).exists()) {
+        index++;
+        filePath = '${directory.path}/khodam_image_$index.png';
+      }
+
+      // Modify the URL to get the correct download link from Google Drive
+      String downloadUrl = url.contains('drive.google.com')
+          ? url.replaceAll('drive.google.com', 'docs.google.com')
+          : url; // Google Drive specific
+
+      final response = await http.get(Uri.parse(downloadUrl));
+
+      if (response.statusCode == 200) {
+        final bytes = response.bodyBytes;
+
+        // Save the new image to the file system
+        final newFile = File(filePath);
+        await newFile.writeAsBytes(bytes);
+        print("Image downloaded and saved to: $filePath");
+
+        // Reset the image state and trigger a refresh
+        setState(() {
+          imageUrl = ''; // Reset imageUrl before setting the new one
+        });
+
+        // After the reset, update the imageUrl with the new file path
+        setState(() {
+          imageUrl = filePath; // Update the imageUrl to the new image path
+        });
+      } else {
+        throw Exception('Failed to download image');
+      }
+    } catch (e) {
+      print("Error downloading image: $e");
+    }
   }
 
   // Function to capture screenshot
@@ -115,8 +191,63 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
     });
   }
 
+  void _navigateToResultPage(
+      BuildContext context,
+      String title,
+      String description,
+      String imageUrl,
+      double extrovert,
+      double introvert,
+      String jomok_level,
+      String love_language,
+      String people) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => KhodamResultPage(
+          title: title,
+          description: description,
+          imagePath: imageUrl,
+          extrovert: extrovert,
+          introvert: introvert,
+          jomok_level: jomok_level,
+          love_language: love_language,
+          people: people,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!isDataLoaded) {
+      return Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/CHECKHODAM_1.png', // Logo in AppBar
+                height: 20,
+              ),
+            ],
+          ),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Container(
+            color: Colors.black, // Set the background color to black
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Colors.white), // Set the progress indicator color to white
+            ),
+          ),
+        ),
+      );
+    }
+
     // Get device screen size
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
@@ -199,15 +330,12 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
                             CircleAvatar(
                               radius: 60,
                               backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.person,
-                                size: 60,
-                                color: Colors.grey,
-                              ),
+                              backgroundImage:
+                                  FileImage(File(imageUrl)), // Use FileImage
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              widget.title,
+                              title, // Use the title fetched from API
                               style: const TextStyle(
                                 fontFamily: "DEATH_FONT",
                                 fontSize: 32,
@@ -218,8 +346,8 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
                             const SizedBox(height: 20),
                             // Display dynamic description
                             Text(
-                              widget.description.isNotEmpty
-                                  ? widget.description
+                              description.isNotEmpty
+                                  ? description
                                   : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
                               style: const TextStyle(
                                 fontSize: 16,
@@ -229,21 +357,22 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
                             ),
                             const SizedBox(height: 40),
                             const Align(
-                              alignment: Alignment.centerLeft,
+                              alignment: Alignment.bottomCenter,
                               child: Text(
                                 'PERSONAL TRAITS',
                                 style: TextStyle(
-                                  fontFamily: "DEATH_FONT",
+                                  fontFamily: "boxpot",
                                   fontSize: 24,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             _buildTraitProgressBar(
-                                'EXTROVERT', Colors.blue, 0.7),
-                            const SizedBox(height: 20),
-                            _buildTraitProgressBar('HUNGER', Colors.red, 0.5),
+                                'ekstrovert', Colors.green, extrovert),
+                            const SizedBox(height: 10),
+                            _buildTraitProgressBar(
+                                'introvert', Colors.yellow, introvert),
                             const SizedBox(height: 40),
                           ],
                         ),
@@ -266,15 +395,28 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
-                        onPressed: captureScreenshot, // Button disabled
+                        onPressed: () {
+                          // Ensure you're passing the correct arguments to the function
+                          _navigateToResultPage(
+                              context,
+                              title, // Use the title fetched from API
+                              description, // Use the description fetched from API
+                              imageUrl,
+                              extrovert,
+                              introvert,
+                              jomok_level,
+                              love_language,
+                              people // Use the local path of the downloaded image
+                              );
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(20),
                           backgroundColor: Colors.white,
                         ),
                         child: Image.asset(
-                          'assets/images/Search More.png', // Replace with your custom image
-                          width: 30, // Image size
+                          'assets/images/Search More.png', // Your button icon
+                          width: 30,
                           height: 30,
                           fit: BoxFit.cover,
                         ),
@@ -370,10 +512,25 @@ class _KhodamDetailPageState extends State<KhodamDetailPage> {
           ),
         ),
         const SizedBox(height: 10),
-        LinearProgressIndicator(
-          value: progress,
-          backgroundColor: color.withOpacity(0.3),
-          valueColor: AlwaysStoppedAnimation<Color>(color),
+        Row(
+          children: [
+            Expanded(
+              child: LinearProgressIndicator(
+                value: progress,
+                backgroundColor: color.withOpacity(0.3),
+                valueColor: AlwaysStoppedAnimation<Color>(color),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '${(progress * 100).toStringAsFixed(0)}%', // Convert progress to percentage
+              style: TextStyle(
+                fontFamily: 'micross',
+                fontSize: 16,
+                color: color,
+              ),
+            ),
+          ],
         ),
       ],
     );

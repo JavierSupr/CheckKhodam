@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -7,6 +9,7 @@ import 'package:image/image.dart' as img;
 import 'package:flutter/services.dart' show rootBundle, ByteData;
 import 'package:share_plus/share_plus.dart';
 import 'camera_page.dart';
+import 'khodam_result.dart';
 
 class ImageProcessingScreen extends StatefulWidget {
   final String originalImagePath;
@@ -21,6 +24,13 @@ class _ImageProcessingScreenState extends State<ImageProcessingScreen> {
   String? _processedImagePath;
   bool _isProcessing = false;
   String? _backgroundImageUrl;
+  String? _khodamName;
+  String? _khodamDescription;
+  double _extrovert = 0.0;
+  double _introvert = 0.0;
+  String? _jomok_level;
+  String? _love_language;
+  String? _people;
 
   @override
   void initState() {
@@ -38,8 +48,23 @@ class _ImageProcessingScreenState extends State<ImageProcessingScreen> {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         final imageUrl = jsonResponse['imageUrl'];
+        final name = jsonResponse['nama']; // Get the nama
+        final description = jsonResponse['deskripsi']; // Get the deskripsi
+        final extrovert = jsonResponse['extrovert'].toDouble();
+        final introvert = jsonResponse['introvert'].toDouble();
+        final jomok_level = jsonResponse['jomok meter'];
+        final love_language = jsonResponse['love language'];
+        final people = jsonResponse['orang terkenal dengan khodam ini'];
+
         setState(() {
           _backgroundImageUrl = imageUrl;
+          _khodamName = name;
+          _khodamDescription = description;
+          _extrovert = extrovert;
+          _introvert = introvert;
+          _jomok_level = jomok_level;
+          _love_language = love_language;
+          _people = people;
         });
       } else {
         _showErrorDialog('Failed to fetch background image URL');
@@ -55,7 +80,7 @@ class _ImageProcessingScreenState extends State<ImageProcessingScreen> {
     });
 
     final apiKey =
-        'nBGvNsEF2WFVYgFft5dkymKv'; // Replace with your remove.bg API key
+        'tkJ2EMLA3FKyPXPEH2XbsN3j'; // Replace with your remove.bg API key
     final url = Uri.parse('https://api.remove.bg/v1.0/removebg');
     final request = http.MultipartRequest('POST', url)
       ..headers['X-Api-Key'] = apiKey
@@ -164,19 +189,6 @@ class _ImageProcessingScreenState extends State<ImageProcessingScreen> {
         color: Colors.black,
         child: Stack(
           children: [
-            // Background images
-            if (_backgroundImageUrl != null)
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Image.network(
-                  _backgroundImageUrl!,
-                  fit: BoxFit.cover,
-                  height: screenSize.height * 0.75,
-                  width: screenSize.width,
-                ),
-              ),
-
             // Processed Image Preview with new background
             Positioned(
               top: 0,
@@ -203,6 +215,8 @@ class _ImageProcessingScreenState extends State<ImageProcessingScreen> {
                           ? SizedBox.shrink()
                           : Image.file(
                               File(_processedImagePath!),
+                              key: ValueKey(
+                                  _processedImagePath), // This forces a rebuild when the path changes
                               fit: BoxFit.cover,
                             ),
                 ),
@@ -223,7 +237,24 @@ class _ImageProcessingScreenState extends State<ImageProcessingScreen> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            // Learn More action
+                            if (_khodamName != null &&
+                                _khodamDescription != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => KhodamResultPage(
+                                    title: _khodamName!,
+                                    description: _khodamDescription!,
+                                    imagePath: _backgroundImageUrl!,
+                                    extrovert: _extrovert,
+                                    introvert: _introvert,
+                                    jomok_level: _jomok_level!,
+                                    love_language: _love_language!,
+                                    people: _people!,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
