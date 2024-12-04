@@ -1,14 +1,11 @@
+import 'package:checkkhodam/screens/about_us.dart';
 import 'package:checkkhodam/screens/camera_page.dart';
 import 'package:checkkhodam/screens/privacy_policy_page.dart';
-import 'package:checkkhodam/screens/welcome_page.dart';
+import 'package:checkkhodam/screens/tnc.dart';
 import 'khodam_xplore.dart';
-import 'quiz_pages/quiz_page_0.dart';
 import 'package:checkkhodam/screens/quiz_pages/quiz_page_0.dart';
 
 import 'package:flutter/material.dart';
-import 'privacy_policy_page.dart';
-import 'camera_page.dart';
-import 'welcome_page.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -23,6 +20,7 @@ class _LandingPageState extends State<LandingPage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CameraPage()),
+
     );
   }
 
@@ -35,7 +33,6 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  void _navigateToQuizPage() {
 
     
   void _navigateToQuizPage(){
@@ -106,7 +103,7 @@ class _LandingPageState extends State<LandingPage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                    MaterialPageRoute(builder: (context) => TnCPage()),
                   );
                 },
               ),
@@ -119,7 +116,7 @@ class _LandingPageState extends State<LandingPage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomePage()),
+                    MaterialPageRoute(builder: (context) => AboutUsPage()),
                   );
                 },
               ),
@@ -132,30 +129,13 @@ class _LandingPageState extends State<LandingPage> {
         child: Stack(
           children: [
             // Background images
-            Positioned(
-              top: -70,
-              right: 0,
+            Positioned.fill(
               child: Image.asset(
-                'assets/images/Ellipse 70.png',
-                fit: BoxFit.none,
+                'assets/images/bg_aboutUs.png',
+                fit: BoxFit.fill,
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Image.asset(
-                'assets/images/Ellipse 71.png',
-                fit: BoxFit.none,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Image.asset(
-                'assets/images/Rectangle 353.png',
-                fit: BoxFit.none,
-              ),
-            ),
+            
             // Main content
             Center(
               child: Column(
@@ -212,57 +192,58 @@ class _LandingPageState extends State<LandingPage> {
                       ],
                     ),
                   ),
+                  
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: _navigateToQuizPage, // Space between buttons
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          height: 120,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                width: 100,
-                                height: 100,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  gradient: RadialGradient(
-                                    colors: [
-                                      Colors.white, // Inner color
-                                      Color.fromARGB(
-                                          233, 88, 88, 88), // Outer color
-                                    ],
-                                    center: Alignment(0.05, 0.45),
-                                    radius:
-                                        0.3, // Adjust the spread of the gradient
-                                  ),
+                  child : Column(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        height: 120,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: RadialGradient(
+                                  colors: [
+                                    Colors.white, // Inner color
+                                    Color.fromARGB(
+                                        233, 88, 88, 88), // Outer color
+                                  ],
+                                  center: Alignment(0.05, 0.45),
+                                  radius:
+                                      0.3, // Adjust the spread of the gradient
                                 ),
                               ),
-                              Positioned(
-                                top: 30, // Adjust the vertical position
-                                child: Image.asset(
-                                  'assets/images/Group 45.png',
-                                  width: 170,
-                                  height: 85,
-                                  fit: BoxFit.cover,
-                                ),
+                            ),
+                            Positioned(
+                              top: 30, // Adjust the vertical position
+                              child: Image.asset(
+                                'assets/images/Group 45.png',
+                                width: 170,
+                                height: 85,
+                                fit: BoxFit.cover,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          'KHODAM QUIZ',
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontFamily: "DEATH_FONT",
-                              color: Colors.white),
-                        ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'KHODAM QUIZ',
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontFamily: "DEATH_FONT",
+                            color: Colors.white),
+                      ),
+                    ],
                   ),
+                ),
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: _navigateToKhodamXplorePage,

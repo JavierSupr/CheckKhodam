@@ -47,6 +47,12 @@ class _KhodamXplorePageState extends State<KhodamXplorePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.home, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

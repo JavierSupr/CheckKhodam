@@ -10,6 +10,12 @@ class ExplanationPage extends StatelessWidget {
       // Add AppBar with an image
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -28,33 +34,13 @@ class ExplanationPage extends StatelessWidget {
             color: Colors.black,
           ),
           // Positioned image at the bottom-left
-          Positioned(
-            bottom: 0,
-            left: 0,
+          Positioned.fill(
             child: Image.asset(
-              'assets/images/Ellipse 62.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
+              'assets/images/bg_expl_page.png',
+              fit: BoxFit.fill, // Ensure no scaling of the image
             ),
           ),
-          // Another positioned image at the bottom-left
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Image.asset(
-              'assets/images/Ellipse 63.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
-            ),
-          ),
-          // Positioned image at the bottom-right
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/images/Ellipse 61.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
-            ),
-          ),
-          // Centered text content
+          
           Column(
             crossAxisAlignment:
                 CrossAxisAlignment.start, // Align content to the left
@@ -89,20 +75,20 @@ class ExplanationPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 20.0), // Padding from the left
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea', // New text below
+                  'Rasakan ketegangan yang mencekam saat kau sadar bahwa ada sosok tak kasat mata yang telah mengawasi setiap gerakmu, bahkan saat kau terlelap dalam tidurmu. Bayangannya selalu ada, menunggu saat yang tepat untuk menampakkan diri.',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontFamily: 'micross',
-                  ),
+                  ),textAlign: TextAlign.justify,
                 ),
               ),
             ],
           ),
           // Positioned Button that can be moved freely
           Positioned(
-            bottom: 60, // Adjust the distance from the bottom here
-            left: 100, // Adjust the distance from the left here
+            bottom: 100, // Adjust this as needed
+            left: MediaQuery.of(context).size.width / 2 - 90, // Adjust the distance from the left here
             child: SizedBox(
               width: 180,
               height: 60, // Button height

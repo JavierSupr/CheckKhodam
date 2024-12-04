@@ -1,11 +1,22 @@
-import 'package:checkkhodam/screens/explanation_page.dart';
 import 'package:checkkhodam/screens/landing_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'welcome_page.dart';
+
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyPage extends StatefulWidget {
   const PrivacyPolicyPage({super.key});
+
+  Future<void> agreeToTerms(BuildContext context) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isAgreed', true);  // Set status persetujuan
+
+      // Setelah setuju, langsung ke Landing Page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LandingPage()),
+      );
+    }
 
   @override
   _PrivacyPolicyPageState createState() => _PrivacyPolicyPageState();
@@ -20,6 +31,12 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
       // Add AppBar with an image
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -37,12 +54,10 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           Container(
             color: Colors.black,
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
+          Positioned.fill(
             child: Image.asset(
               'assets/images/Rectangle 354.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
+              fit: BoxFit.fill, // Ensure no scaling of the image
             ),
           ),
           // Centered text content
@@ -76,7 +91,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.black54, // Slightly transparent background
                 ),
-                child: SingleChildScrollView(
+                child: const SingleChildScrollView(
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
