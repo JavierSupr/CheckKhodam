@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
       { method: 'POST', path: '/users/register', description: 'Register a new user with name, email, and password' },
       { method: 'POST', path: '/users/login', description: 'Login with email and password' },
       { method: 'GET', path: '/khodam/getrandom', description: 'Retrieve a random document from collection khod-000' },
+      { method: 'GET', path: '/khodam/getallkhodam', description: 'Retrieve all documents from collection khod-000' },
       { method: 'POST', path: '/khodam/addImage', description: 'Add or update image URL for a document in collection khod-000' }
     ]
   });
@@ -82,6 +83,26 @@ app.get('/khodam/getrandom', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Endpoint untuk mendapatkan semua dokumen dari koleksi 'khod-000'
+app.get('/khodam/getallkhodam', async (req, res) => {
+  try {
+    const snapshot = await db.collection('khod-000').get();
+
+    if (snapshot.empty) {
+      return res.status(404).json({ error: 'No documents found in collection khod-000' });
+    }
+
+    // Ambil semua dokumen
+    const khodams = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    res.status(200).json(khodams);
+  } catch (error) {
+    console.error('Error fetching all documents:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Endpoint untuk login
 app.post('/users/login', async (req, res) => {
