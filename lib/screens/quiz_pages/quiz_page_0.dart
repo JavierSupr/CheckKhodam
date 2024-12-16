@@ -21,12 +21,10 @@ class QuizPage0 extends StatelessWidget {
           // Black background
           Container(color: Colors.black),
           // Positioned image at the bottom-left
-          Positioned(
-            top: 0,
-            left: 0,
+          Positioned.fill(
             child: Image.asset(
               'assets/images/bg_asset_quiz0.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
+              fit: BoxFit.fill, // Ensure no scaling of the image
             ),
           ),
           Column(

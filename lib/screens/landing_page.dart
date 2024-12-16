@@ -1,6 +1,7 @@
+import 'package:checkkhodam/screens/about_us.dart';
 import 'package:checkkhodam/screens/camera_page.dart';
 import 'package:checkkhodam/screens/privacy_policy_page.dart';
-import 'package:checkkhodam/screens/welcome_page.dart';
+import 'package:checkkhodam/screens/tnc.dart';
 import 'khodam_xplore.dart';
 import 'package:checkkhodam/screens/quiz_pages/quiz_page_0.dart';
 
@@ -95,8 +96,7 @@ class _LandingPageState extends State<LandingPage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => PrivacyPolicyPage()),
+                    MaterialPageRoute(builder: (context) => TnCPage()),
                   );
                 },
               ),
@@ -109,7 +109,7 @@ class _LandingPageState extends State<LandingPage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomePage()),
+                    MaterialPageRoute(builder: (context) => AboutUsPage()),
                   );
                 },
               ),
@@ -122,30 +122,13 @@ class _LandingPageState extends State<LandingPage> {
         child: Stack(
           children: [
             // Background images
-            Positioned(
-              top: -70,
-              right: 0,
+            Positioned.fill(
               child: Image.asset(
-                'assets/images/Ellipse 70.png',
-                fit: BoxFit.none,
+                'assets/images/bg_aboutUs.png',
+                fit: BoxFit.fill,
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Image.asset(
-                'assets/images/Ellipse 71.png',
-                fit: BoxFit.none,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Image.asset(
-                'assets/images/Rectangle 353.png',
-                fit: BoxFit.none,
-              ),
-            ),
+
             // Main content
             Center(
               child: Column(

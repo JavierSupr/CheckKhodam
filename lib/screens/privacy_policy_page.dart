@@ -1,11 +1,22 @@
-import 'package:checkkhodam/screens/explanation_page.dart';
 import 'package:checkkhodam/screens/landing_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'welcome_page.dart';
+
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyPage extends StatefulWidget {
   const PrivacyPolicyPage({super.key});
+
+  Future<void> agreeToTerms(BuildContext context) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isAgreed', true);  // Set status persetujuan
+
+      // Setelah setuju, langsung ke Landing Page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LandingPage()),
+      );
+    }
 
   @override
   _PrivacyPolicyPageState createState() => _PrivacyPolicyPageState();
@@ -20,6 +31,12 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
       // Add AppBar with an image
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -37,12 +54,10 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           Container(
             color: Colors.black,
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
+          Positioned.fill(
             child: Image.asset(
               'assets/images/Rectangle 354.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
+              fit: BoxFit.fill, // Ensure no scaling of the image
             ),
           ),
           // Centered text content
@@ -76,7 +91,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.black54, // Slightly transparent background
                 ),
-                child: SingleChildScrollView(
+                child: const SingleChildScrollView(
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -90,7 +105,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '  Pengguna bertanggung jawab untuk setiap aktivitas yang dilakukan melalui akun mereka.',
+                        '  Aplikasi ini dirancang untuk tujuan hiburan dan edukasi ringan. Segala informasi yang disediakan hanya untuk keperluan bersenang-senang, dan tidak boleh dianggap sebagai nasihat profesional.',
                         textAlign: TextAlign.justify, // Make text justified
                         style: TextStyle(
                           color: Colors.white,
@@ -108,7 +123,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '  Pengguna bertanggung jawab untuk setiap aktivitas yang dilakukan melalui akun mereka.',
+                        '  Pengguna bertanggung jawab atas segala aktivitas yang dilakukan di aplikasi ini. Hindari penggunaan yang dapat merugikan pihak lain atau melanggar hukum.',
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: Colors.white,
@@ -126,7 +141,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '  Kami menghargai privasi pengguna dan berkomitmen untuk melindungi data pribadi Anda.',
+                        '  Kami menghargai privasi Anda dan berkomitmen untuk melindungi data pribadi Anda. Informasi yang dikumpulkan hanya digunakan untuk meningkatkan pengalaman Anda di aplikasi ini.',
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: Colors.white,
@@ -135,7 +150,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        '4. Pembaruan Aplikasi:',
+                        '4. Keterbatasan Tanggung Jawab:',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -144,7 +159,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '  Aplikasi ini dapat di-update sewaktu-waktu untuk meningkatkan fungsionalitasnya.',
+                        '  Aplikasi ini tidak memberikan jaminan atas keakuratan atau hasil apa pun. Kami tidak bertanggung jawab atas kerugian yang mungkin timbul dari penggunaan aplikasi ini.',
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: Colors.white,
@@ -153,7 +168,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        '5. Batasan Tanggung Jawab:',
+                        '5. Hanya untuk Have Fun:',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -162,7 +177,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '  Kami tidak bertanggung jawab atas kerugian yang timbul akibat penyalahgunaan aplikasi.',
+                        '  Aplikasi ini dibuat hanya untuk bersenang-senang. Jadi, jangan terlalu serius! Nikmati fitur yang ada, tertawa, dan eksplorasi dunia CheckKhodam dengan santai.',
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: Colors.white,
@@ -171,7 +186,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        '6. Hukum yang Berlaku:',
+                        '6. Pembaruan Aplikasi:',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -180,7 +195,24 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '  Syarat dan ketentuan ini tunduk pada hukum yang berlaku di wilayah hukum pengguna.',
+                        '  Kami berhak untuk memperbarui aplikasi ini sewaktu-waktu, termasuk syarat dan ketentuan ini, tanpa pemberitahuan terlebih dahulu.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '7. Hukum yang Berlaku:',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        '  Syarat dan ketentuan ini diatur oleh hukum yang berlaku di wilayah yurisdiksi Anda.',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,

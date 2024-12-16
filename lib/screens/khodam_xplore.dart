@@ -16,7 +16,6 @@ class KhodamXplorePage extends StatefulWidget {
 }
 
 class _KhodamXplorePageState extends State<KhodamXplorePage> {
-  // Function to fetch all Khodam names and descriptions from the API
   Future<List<Map<String, String>>> _fetchKhodamData() async {
     final response = await http.get(
       Uri.parse('https://chekodam-backend.vercel.app/khodam/getallkhodam'),
@@ -24,8 +23,6 @@ class _KhodamXplorePageState extends State<KhodamXplorePage> {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List;
-
-      // Cast the response to List<Map<String, String>> correctly
       List<Map<String, String>> khodamData = data.map((khodam) {
         return {
           'nama': khodam['nama'] as String,
@@ -39,18 +36,12 @@ class _KhodamXplorePageState extends State<KhodamXplorePage> {
               khodam['orang terkenal dengan khodam ini'] as String
         };
       }).toList();
-
-      // Download images concurrently using Future.wait
       List<Future<String>> downloadTasks = [];
       for (var khodam in khodamData) {
         String imageUrl = khodam['imageUrl']!;
         downloadTasks.add(_downloadImage(imageUrl));
       }
-
-      // Wait for all the image downloads to finish
       List<String> imagePaths = await Future.wait(downloadTasks);
-
-      // Update khodamData with the downloaded image paths
       for (int i = 0; i < khodamData.length; i++) {
         khodamData[i]['localImagePath'] = imagePaths[i];
       }
@@ -121,6 +112,12 @@ class _KhodamXplorePageState extends State<KhodamXplorePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.home, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(); // Navigate back to the previous page
+          },
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -240,12 +237,9 @@ class _KhodamXplorePageState extends State<KhodamXplorePage> {
                                         child: Image.file(
                                           File(khodamData[index]
                                               ['localImagePath']!),
-                                          fit: BoxFit
-                                              .cover, // Ensure the image covers the space without distortion
-                                          width:
-                                              60, // Increased width for the image
-                                          height:
-                                              105, // Increased height for the image
+                                          fit: BoxFit.cover,
+                                          width: 60,
+                                          height: 105,
                                         ),
                                       ),
                                 title: Text(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:checkkhodam/screens/landing_page.dart';
-import 'package:checkkhodam/screens/welcome_page.dart';
 import 'package:checkkhodam/screens/khodam_detail.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -70,13 +69,12 @@ class _QuestionPageState extends State<QuestionPage> {
           Container(
             color: Colors.black,
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
+          Positioned.fill(
             child: Image.asset(
               widget.currentIndex % 2 == 0
                   ? 'assets/images/bg_quiz_odd.png'
                   : 'assets/images/bg_quiz_even.png',
+                  fit: BoxFit.fill,
             ),
           ),
           Padding(

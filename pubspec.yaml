@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.3.3
   camera: ^0.11.0+2
   image_picker: ^0.8.5+3
   cupertino_icons: ^1.0.8
@@ -20,8 +21,10 @@ dependencies:
   screenshot: ^3.0.0
   dio: ^5.7.0
   
+  
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.9.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
@@ -29,8 +32,23 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+
+
+
   assets:
     - assets/fonts/
+    - assets/images/Logo.png
+    - assets/images/appBar.png
+    - assets/images/khal.png
+    - assets/images/bg_expl_page.png
+    - assets/images/bg_tnc_page.png
+    - assets/images/rifan.png
+    - assets/images/beryl.JPG
+    - assets/images/logoPakArta.png
+    - assets/images/logoITS.png
+    - assets/images/logoCE.png
+    - assets/images/aboutUs_img.jpeg
+    - assets/images/bg_aboutUs.png
     - assets/images/bg_quiz_odd.png
     - assets/images/bg_quiz_even.png
     - assets/images/bg_asset_quiz0.png

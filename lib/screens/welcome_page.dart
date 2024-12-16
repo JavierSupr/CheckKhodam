@@ -28,12 +28,10 @@ class WelcomePage extends StatelessWidget {
             color: Colors.black,
           ),
           // Positioned image at the bottom-left
-          Positioned(
-            bottom: 0,
-            left: 0,
+          Positioned.fill(
             child: Image.asset(
               'assets/images/Ellipse 60.png',
-              fit: BoxFit.none, // Ensure no scaling of the image
+              fit: BoxFit.fill, // Ensure no scaling of the image
             ),
           ),
           // Centered text content and button
